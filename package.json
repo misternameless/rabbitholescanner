@@ -1,0 +1,40 @@
+{
+  "name": "nameless-intelligence",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI and crypto opportunity intelligence platform foundation.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/misternameless/rabbitholescanner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/misternameless/rabbitholescanner/issues"
+  },
+  "homepage": "https://github.com/misternameless/rabbitholescanner#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.108.2",
+    "next": "^15.5.19",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.1",
+    "@types/node": "^25.9.3",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^15.5.19",
+    "tailwindcss": "^4.3.1",
+    "typescript": "^6.0.3"
+  }
+}
