@@ -31,7 +31,10 @@ export function AppNavigation() {
             href={item.href}
             className="group whitespace-nowrap border border-zinc-800 bg-zinc-950/50 px-3 py-2 font-mono text-xs uppercase tracking-[0.16em] text-zinc-400 transition hover:border-cyan-400/40 hover:bg-cyan-400/5 hover:text-zinc-100 lg:block"
           >
-            <span className="mr-2 text-zinc-700 group-hover:text-cyan-300">
+            <span
+              aria-hidden="true"
+              className="mr-2 text-zinc-700 group-hover:text-cyan-300"
+            >
               //
             </span>
             {item.label}
