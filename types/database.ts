@@ -75,6 +75,48 @@ export type Database = {
         };
         Relationships: [];
       };
+      github_repos: {
+        Row: {
+          id: string;
+          repo_full_name: string;
+          url: string | null;
+          description: string | null;
+          stars: number | null;
+          forks: number | null;
+          topics: string[] | null;
+          last_push: string | null;
+          metadata: Json | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          repo_full_name: string;
+          url?: string | null;
+          description?: string | null;
+          stars?: number | null;
+          forks?: number | null;
+          topics?: string[] | null;
+          last_push?: string | null;
+          metadata?: Json | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          repo_full_name?: string;
+          url?: string | null;
+          description?: string | null;
+          stars?: number | null;
+          forks?: number | null;
+          topics?: string[] | null;
+          last_push?: string | null;
+          metadata?: Json | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       raw_signals: {
         Row: {
           id: string;
