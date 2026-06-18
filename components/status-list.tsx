@@ -5,7 +5,11 @@ type StatusListProps = {
 };
 
 function getStatusTone(status: IntegrationStatus): string {
-  if (status.state === "connected" || status.state === "configured") {
+  if (
+    status.state === "connected" ||
+    status.state === "configured" ||
+    status.state === "available"
+  ) {
     return "border-emerald-400/30 bg-emerald-400/10 text-emerald-200";
   }
 
@@ -16,26 +20,26 @@ export function StatusList({ statuses }: StatusListProps) {
   return (
     <section
       aria-labelledby="integration-status-heading"
-      className="w-full max-w-xl rounded-3xl border border-white/10 bg-black/35 p-6 shadow-2xl shadow-black/30 backdrop-blur"
+      className="rounded-2xl border border-zinc-800 bg-black/40 p-5"
     >
       <h2
         id="integration-status-heading"
-        className="text-sm font-medium uppercase tracking-[0.32em] text-zinc-400"
+        className="text-xs font-semibold uppercase tracking-[0.24em] text-zinc-500"
       >
-        Status
+        System Status
       </h2>
 
-      <div className="mt-5 space-y-3">
+      <div className="mt-4 space-y-2">
         {statuses.map((status) => (
           <div
             key={status.id}
-            className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3"
+            className="flex items-center justify-between gap-4 border-b border-zinc-900 py-2 last:border-b-0"
           >
-            <span className="text-base font-medium text-zinc-100">
+            <span className="font-mono text-sm text-zinc-200">
               {status.label}
             </span>
             <span
-              className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${getStatusTone(
+              className={`rounded-full border px-2 py-1 font-mono text-[11px] uppercase tracking-[0.14em] ${getStatusTone(
                 status,
               )}`}
             >

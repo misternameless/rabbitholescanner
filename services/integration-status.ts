@@ -27,6 +27,12 @@ export function getIntegrationStatuses(): IntegrationStatus[] {
       displayValue: isGitHubConfigured() ? "Configured" : "Missing",
     },
     {
+      id: "dexscreener",
+      label: "Dexscreener",
+      state: "available",
+      displayValue: "Available",
+    },
+    {
       id: "neynar",
       label: "Neynar",
       state: isNeynarConfigured() ? "configured" : "missing",
