@@ -75,6 +75,54 @@ export type Database = {
         };
         Relationships: [];
       };
+      raw_signals: {
+        Row: {
+          id: string;
+          scan_run_id: string | null;
+          source: string;
+          chain: string | null;
+          external_id: string | null;
+          url: string | null;
+          title: string | null;
+          content: string | null;
+          author: string | null;
+          published_at: string | null;
+          metadata: Json | null;
+          content_hash: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          scan_run_id?: string | null;
+          source: string;
+          chain?: string | null;
+          external_id?: string | null;
+          url?: string | null;
+          title?: string | null;
+          content?: string | null;
+          author?: string | null;
+          published_at?: string | null;
+          metadata?: Json | null;
+          content_hash?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          scan_run_id?: string | null;
+          source?: string;
+          chain?: string | null;
+          external_id?: string | null;
+          url?: string | null;
+          title?: string | null;
+          content?: string | null;
+          author?: string | null;
+          published_at?: string | null;
+          metadata?: Json | null;
+          content_hash?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
       scan_runs: {
         Row: {
           id: string;
