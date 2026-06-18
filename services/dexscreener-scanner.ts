@@ -15,6 +15,9 @@ const SUPPORTED_CHAINS: DexscreenerSupportedChain[] = ["solana", "base"];
 
 type Supabase = SupabaseClient<Database>;
 type CoinInsert = Database["public"]["Tables"]["coins"]["Insert"];
+type SupportedTokenProfile = DexscreenerTokenProfile & {
+  chainId: DexscreenerSupportedChain;
+};
 type ExistingCoin = Pick<
   Database["public"]["Tables"]["coins"]["Row"],
   "id" | "chain" | "pair_address" | "token_address"
@@ -40,6 +43,12 @@ type CoinWriteResult =
 
 function isSupportedChain(chainId: string): chainId is DexscreenerSupportedChain {
   return SUPPORTED_CHAINS.includes(chainId as DexscreenerSupportedChain);
+}
+
+function isSupportedProfile(
+  profile: DexscreenerTokenProfile,
+): profile is SupportedTokenProfile {
+  return isSupportedChain(profile.chainId);
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -181,9 +190,7 @@ function dedupeCoins(coins: CoinInsert[]): CoinInsert[] {
 
 async function fetchSupportedPairs(): Promise<CoinInsert[]> {
   const profiles = await fetchLatestTokenProfiles();
-  const supportedProfiles = profiles.filter((profile) =>
-    isSupportedChain(profile.chainId),
-  );
+  const supportedProfiles = profiles.filter(isSupportedProfile);
 
   const pairsByToken = await Promise.all(
     supportedProfiles.map(async (profile) => ({
