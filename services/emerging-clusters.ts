@@ -1,4 +1,8 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import {
+  validateConcept,
+  type ConceptEvidence,
+} from "@/lib/intelligence/concept-validation";
 import type { Database, Json } from "@/types/database";
 import type {
   ClusterCoinEvidence,
@@ -319,6 +323,23 @@ function toEmergingCluster(cluster: ClusterAccumulator): EmergingCluster {
   };
 }
 
+function getClusterEvidence(cluster: EmergingCluster): ConceptEvidence[] {
+  const repositoryEvidence: ConceptEvidence[] = cluster.related_repositories.map(
+    (repository) => ({
+      id: repository.id,
+      source: "github",
+      author: repository.repository.split("/")[0] ?? null,
+    }),
+  );
+  const coinEvidence: ConceptEvidence[] = cluster.related_coins.map((coin) => ({
+    id: coin.id,
+    source: "dexscreener",
+    author: null,
+  }));
+
+  return [...repositoryEvidence, ...coinEvidence];
+}
+
 function buildClusters(documents: SourceDocument[]): EmergingCluster[] {
   const documentFrequency = new Map<string, number>();
   const documentConcepts = documents.map((document) => {
@@ -344,7 +365,23 @@ function buildClusters(documents: SourceDocument[]): EmergingCluster[] {
 
   return [...clustersByName.values()]
     .map(toEmergingCluster)
-    .filter((cluster) => cluster.evidence_count >= 2)
+    .filter((cluster) => {
+      // Hard write-time gate: an invalid concept (stop word, sub-4-char,
+      // generic, or lacking independent evidence) is dropped and logged here.
+      // There is no path for it to reach callers, the UI, or Supabase.
+      const result = validateConcept(
+        cluster.cluster_name,
+        getClusterEvidence(cluster),
+      );
+
+      if (!result.valid) {
+        console.warn(
+          `[emerging-clusters] dropped invalid concept "${cluster.cluster_name}" (${result.reason})`,
+        );
+      }
+
+      return result.valid;
+    })
     .sort((left, right) => {
       if (right.evidence_count !== left.evidence_count) {
         return right.evidence_count - left.evidence_count;
