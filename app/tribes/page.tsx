@@ -1,10 +1,13 @@
 import { TribeCards } from "@/components/tribe-cards";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getIntelligenceDashboard } from "@/services/intelligence-product";
 
 export const dynamic = "force-dynamic";
 
 export default async function TribesPage() {
-  const dashboardData = await getIntelligenceDashboard();
+  const dashboardData = await getIntelligenceDashboard(
+    createSupabaseServerClient(),
+  );
 
   return (
     <>

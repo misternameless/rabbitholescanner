@@ -1,12 +1,15 @@
 import { OpportunityRadar } from "@/components/opportunity-radar";
 import { RelatedAssets } from "@/components/related-assets";
 import { WeakSignals } from "@/components/weak-signals";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getIntelligenceDashboard } from "@/services/intelligence-product";
 
 export const dynamic = "force-dynamic";
 
 export default async function OpportunitiesPage() {
-  const dashboardData = await getIntelligenceDashboard();
+  const dashboardData = await getIntelligenceDashboard(
+    createSupabaseServerClient(),
+  );
 
   return (
     <>

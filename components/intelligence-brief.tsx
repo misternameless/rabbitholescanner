@@ -34,7 +34,29 @@ export function IntelligenceBriefPanel({ brief }: IntelligenceBriefProps) {
       eyebrow="What is forming before the market notices?"
     >
       {!hasBrief ? (
-        <EmptyState message={EMPTY_INTELLIGENCE_MESSAGE} />
+        <div className="grid gap-3 lg:grid-cols-[1fr_0.7fr]">
+          <EmptyState message={EMPTY_INTELLIGENCE_MESSAGE} />
+          <div className="border border-zinc-800 bg-zinc-950/60 p-4">
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-zinc-500">
+              Analyst prompts queued
+            </p>
+            <div className="mt-4 space-y-2">
+              {BRIEF_ROWS.map((row, index) => (
+                <div
+                  key={row.key}
+                  className="flex gap-3 border-b border-zinc-900 pb-2 last:border-b-0"
+                >
+                  <span className="font-mono text-xs text-cyan-300/70">
+                    0{index + 1}
+                  </span>
+                  <span className="font-mono text-xs leading-5 text-zinc-500">
+                    {row.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       ) : (
         <div className="grid gap-3">
           {BRIEF_ROWS.map((row) => (

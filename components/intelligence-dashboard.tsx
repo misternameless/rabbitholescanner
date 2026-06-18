@@ -1,3 +1,4 @@
+import { IntelligenceCommandCenter } from "@/components/intelligence-command-center";
 import { IntelligenceBriefPanel } from "@/components/intelligence-brief";
 import { NarrativeBubbleMap } from "@/components/narrative-bubble-map";
 import { OpportunityRadar } from "@/components/opportunity-radar";
@@ -14,6 +15,10 @@ type IntelligenceDashboardProps = {
 export function IntelligenceDashboard({ data }: IntelligenceDashboardProps) {
   return (
     <div className="space-y-5">
+      <IntelligenceCommandCenter
+        readiness={data.readiness}
+        sources={data.source_inventory}
+      />
       <IntelligenceBriefPanel brief={data.brief} />
       <RabbitHoleCards rabbitHoles={data.rabbit_holes} />
       <TribeCards tribes={data.digital_tribes} />

@@ -1,10 +1,13 @@
 import { NarrativeBubbleMap } from "@/components/narrative-bubble-map";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getIntelligenceDashboard } from "@/services/intelligence-product";
 
 export const dynamic = "force-dynamic";
 
 export default async function NarrativesPage() {
-  const dashboardData = await getIntelligenceDashboard();
+  const dashboardData = await getIntelligenceDashboard(
+    createSupabaseServerClient(),
+  );
 
   return (
     <>

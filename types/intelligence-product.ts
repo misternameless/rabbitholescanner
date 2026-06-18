@@ -75,6 +75,23 @@ export type RelatedAsset = {
   attached_to: string;
 };
 
+export type SourceInventoryItem = {
+  source: "Farcaster" | "GitHub" | "X/Twitter" | "Dexscreener";
+  priority: number;
+  status: "Collecting" | "Blocked" | "Not Connected" | "Supporting Source";
+  evidence_count: number;
+  last_scan_at: string | null;
+};
+
+export type IntelligenceReadiness = {
+  source_documents: number;
+  generated_briefs: number;
+  detected_rabbit_holes: number;
+  detected_tribes: number;
+  detected_narratives: number;
+  weak_signals: number;
+};
+
 export type IntelligenceDashboard = {
   brief: IntelligenceBrief | null;
   rabbit_holes: RabbitHole[];
@@ -83,4 +100,6 @@ export type IntelligenceDashboard = {
   opportunity_radar: OpportunityRadarItem[];
   weak_signals: WeakSignal[];
   related_assets: RelatedAsset[];
+  source_inventory: SourceInventoryItem[];
+  readiness: IntelligenceReadiness;
 };

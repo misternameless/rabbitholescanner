@@ -1,10 +1,13 @@
 import { IntelligenceDashboard } from "@/components/intelligence-dashboard";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getIntelligenceDashboard } from "@/services/intelligence-product";
 
 export const dynamic = "force-dynamic";
 
 export default async function BriefPage() {
-  const dashboardData = await getIntelligenceDashboard();
+  const dashboardData = await getIntelligenceDashboard(
+    createSupabaseServerClient(),
+  );
 
   return (
     <>
