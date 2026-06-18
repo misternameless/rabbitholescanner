@@ -138,8 +138,8 @@ function getTelegramUrl(links: DexscreenerLink[]): string | null {
   });
 }
 
-function getCoinKey(coin: Pick<CoinInsert, "chain" | "token_address" | "pair_address">) {
-  return `${coin.chain}:${coin.pair_address ?? coin.token_address}`;
+function getCoinKey(coin: Pick<CoinInsert, "chain" | "token_address">) {
+  return `${coin.chain}:${coin.token_address}`;
 }
 
 function toCoinInsert(
@@ -185,7 +185,21 @@ function toCoinInsert(
 }
 
 function dedupeCoins(coins: CoinInsert[]): CoinInsert[] {
-  return [...new Map(coins.map((coin) => [getCoinKey(coin), coin])).values()];
+  const coinsByToken = new Map<string, CoinInsert>();
+
+  for (const coin of coins) {
+    const key = getCoinKey(coin);
+    const existingCoin = coinsByToken.get(key);
+
+    if (
+      !existingCoin ||
+      (coin.liquidity_usd ?? 0) > (existingCoin.liquidity_usd ?? 0)
+    ) {
+      coinsByToken.set(key, coin);
+    }
+  }
+
+  return [...coinsByToken.values()];
 }
 
 async function fetchSupportedPairs(): Promise<CoinInsert[]> {
@@ -221,18 +235,16 @@ async function fetchExistingCoins(
       error: unknown;
     }
 > {
-  const pairAddresses = coins
-    .map((coin) => coin.pair_address)
-    .filter((pairAddress): pairAddress is string => Boolean(pairAddress));
+  const tokenAddresses = coins.map((coin) => coin.token_address);
 
-  if (pairAddresses.length === 0) {
+  if (tokenAddresses.length === 0) {
     return { success: true, existingByKey: new Map() };
   }
 
   const { data, error } = await supabase
     .from("coins")
     .select("id, chain, pair_address, token_address")
-    .in("pair_address", pairAddresses);
+    .in("token_address", tokenAddresses);
 
   if (error) {
     return { success: false, error };
