@@ -1,26 +1,27 @@
-import { IntelligenceDashboard } from "@/components/intelligence-dashboard";
+import { RabbitHoleCards } from "@/components/rabbit-hole-cards";
 import { getIntelligenceDashboard } from "@/services/intelligence-product";
 
 export const dynamic = "force-dynamic";
 
-export default async function Home() {
+export default async function RabbitHolesPage() {
   const dashboardData = await getIntelligenceDashboard();
 
   return (
     <>
       <header className="mb-8 border-b border-zinc-800 pb-6">
         <p className="mb-3 font-mono text-xs uppercase tracking-[0.32em] text-zinc-500">
-          Intelligence Briefing
+          Research Desk
         </p>
         <h1 className="font-mono text-3xl font-semibold tracking-tight text-white sm:text-5xl">
-          Nameless Intelligence
+          Rabbit Holes
         </h1>
-        <p className="mt-3 font-mono text-sm uppercase tracking-[0.24em] text-zinc-400">
-          Signal Before Noise
+        <p className="mt-3 max-w-3xl text-sm leading-6 text-zinc-400">
+          Early rabbit holes should surface recurring curiosity, belief, and
+          builder motion before a market category is obvious.
         </p>
       </header>
 
-      <IntelligenceDashboard data={dashboardData} />
+      <RabbitHoleCards rabbitHoles={dashboardData.rabbit_holes} />
     </>
   );
 }

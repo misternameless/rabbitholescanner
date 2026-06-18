@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AppNavigation } from "@/components/app-navigation";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,7 +14,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AppNavigation />
+        <main className="px-4 py-8 sm:px-6 lg:ml-72 lg:px-8">
+          <div className="mx-auto w-full max-w-7xl">{children}</div>
+        </main>
+      </body>
     </html>
   );
 }
