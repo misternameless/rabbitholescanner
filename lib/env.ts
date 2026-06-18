@@ -36,6 +36,14 @@ function readEnv(name: string): string | undefined {
   return value ? value : undefined;
 }
 
+function normalizeSupabaseUrl(url: string): string {
+  try {
+    return new URL(url).origin;
+  } catch {
+    return url;
+  }
+}
+
 export function getConfigCheck(): ConfigCheck {
   return REQUIRED_ENVIRONMENT_VARIABLES.reduce<ConfigCheck>(
     (status, variable) => ({
@@ -47,14 +55,14 @@ export function getConfigCheck(): ConfigCheck {
 }
 
 export function getSupabaseClientConfig(): SupabaseClientConfig | null {
-  const url = readEnv("SUPABASE_URL");
+  const rawUrl = readEnv("SUPABASE_URL");
   const anonKey = readEnv("SUPABASE_ANON_KEY");
 
-  if (!url || !anonKey) {
+  if (!rawUrl || !anonKey) {
     return null;
   }
 
-  return { url, anonKey };
+  return { url: normalizeSupabaseUrl(rawUrl), anonKey };
 }
 
 export function getSupabaseServerConfig(): SupabaseServerConfig | null {
