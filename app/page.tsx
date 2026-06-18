@@ -1,4 +1,4 @@
-import { IntelligenceDashboard } from "@/components/intelligence-dashboard";
+import { LiveIntelligenceDashboard } from "@/components/live-intelligence-dashboard";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getIntelligenceDashboard } from "@/services/intelligence-product";
 
@@ -36,7 +36,7 @@ export default async function Home() {
         </div>
       </header>
 
-      <IntelligenceDashboard data={dashboardData} />
+      <LiveIntelligenceDashboard initialData={dashboardData} />
     </>
   );
 }

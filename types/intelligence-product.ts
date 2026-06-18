@@ -75,6 +75,14 @@ export type RelatedAsset = {
   attached_to: string;
 };
 
+export type IntelligenceAlert = {
+  id: string;
+  severity: "info" | "watch" | "warning";
+  title: string;
+  detail: string;
+  source: string;
+};
+
 export type SourceInventoryItem = {
   source: "Farcaster" | "GitHub" | "X/Twitter" | "Dexscreener";
   priority: number;
@@ -102,4 +110,6 @@ export type IntelligenceDashboard = {
   related_assets: RelatedAsset[];
   source_inventory: SourceInventoryItem[];
   readiness: IntelligenceReadiness;
+  alerts: IntelligenceAlert[];
+  generated_at: string;
 };
