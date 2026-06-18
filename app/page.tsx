@@ -6,6 +6,8 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getDashboardData } from "@/services/dashboard";
 import { getIntegrationStatuses } from "@/services/integration-status";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const statuses = getIntegrationStatuses();
   const dashboardData = await getDashboardData(createSupabaseServerClient());
