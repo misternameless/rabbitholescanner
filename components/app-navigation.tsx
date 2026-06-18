@@ -35,7 +35,7 @@ export function AppNavigation() {
               aria-hidden="true"
               className="mr-2 text-zinc-700 group-hover:text-cyan-300"
             >
-              //
+              {"//"}
             </span>
             {item.label}
           </Link>
